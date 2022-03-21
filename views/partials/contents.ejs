@@ -1,0 +1,55 @@
+
+<script>
+    window.onload=(event)=> {
+        var jokeButton = document.getElementById('jokeButton');
+        jokeButton.addEventListener('click', function(){
+           var max = 607;
+           var randomNumber = Math.floor(Math.random() * max)
+           console.log(randomNumber)
+           //   WORKS UP TO THIS POINT, need to find jokes to make this work. 
+           var joke = jokes[randomNumber].joke;
+
+           // this should work
+           //document.getElementById("inputBox").value = joke;
+          
+           });          
+            // Create AJAX object
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // response data shows in status field
+                    //document.getElementById('status').innerHTML = this.responseText;
+                    console.log('readystate ok');
+                 };
+            };
+
+        // send POST type AJAX request
+        xmlhttp.open('POST', '/jokes', true);
+        // create AJAX parameters & data fields
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("joke: " + joke);
+
+    }
+   
+   </script>
+<body>
+    <div class="container">
+    <h1>Jokes</h1>
+    <div class="row"></div>
+    <div class="col-sm-6">
+    <table>
+        <tr><th>All jokes</th></tr>
+        <% for (var i=0; i<jokes.length; i++) { %>
+            <tr>
+                <td><%=jokes[i].joke %></td>
+            </tr>
+    <% }; %>
+    </table>
+    </div>
+    <div class="col-sm-6">
+Random joke
+<input type="text" id="inputBox">
+<button id="jokeButton" >Get Joke</button>
+    </div>
+    </div>
+</body>
