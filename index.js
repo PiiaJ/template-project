@@ -11,9 +11,9 @@ var app = express();
 
 app.set("view engine", "ejs");
 
-// new message page with ajax
+// jokes from https://geek-jokes.sameerkumar.website/api?format=json
 app.get("/", function (req, res) {
-  var data = require("https://github.com/sameerkumar18/geek-joke-api/blob/master/data.json");
+  var data = require(__dirname + "/jokes.json");
 
   var bodyParser = require("body-parser");
   const { response } = require("express");
@@ -25,7 +25,6 @@ app.get("/", function (req, res) {
   res.render("pages/jokes", { jokes: data });
 });
 
-// api from GET: https://geek-jokes.sameerkumar.website/api?format=json
 // 404 MESSAGE
 app.get("*", function (req, res) {
   res.status(404).send("Sorry, requested page not found.");
